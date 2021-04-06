@@ -4,6 +4,8 @@ This project intends to provides a 3D model of a plastic piece to adapt a Raspbe
 
 The target heatsink can be found on differente marketplaces under the name [Aokin Raspberry Pi 4 Model B Dual Fan with Heatsink](https://www.aliexpress.com/i/4000401940976.html).
 
+It is recommended the usage of PETG 3D Printing Filament.
+
 This project uses [Daniel Upshaw's Rounded Corners OpenSCAD library](https://danielupshaw.com/openscad-rounded-corners/)
 
 ![](render.png)
