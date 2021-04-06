@@ -6,28 +6,28 @@ module heatsink_holder ()
 {
 	// Editable parameters 
 	thickness = 1;
-	hole_distance_width_front = 78;
-	hole_distance_width_rear = 65;
-	hole_distance_lenght = 26;
+	hole_distance_width_front = 79.2;
+	hole_distance_width_rear = 65.2;
+	hole_distance_lenght = 25.9;
 
 	som_thickness=1.2;
 	soc_thickness=1.481;
-	thermal_pad_thickness=1;
-	hole_diameter = 2.2;
+	thermal_pad_thickness=1.2;
+	spacer_hole_diameter = 2.2;
 
-	heatsink_width = 51;
-	heatsink_lenght = 25;
-	heatsink_height = 13;
-	heatsink_fan_diameter = 23;
+	heatsink_width = 51+0.4;
+	heatsink_lenght = 25+0.4;
+	heatsink_height = 12;
+	heatsink_fan_diameter = 24;
 	heatsink_fan_offset = 13;
-	heatsink_screw_diameter = 2.2;
+	heatsink_screw_diameter = 3.2;
 	heatsink_screw_x_pos = heatsink_fan_offset+10;
 	heatsink_screw_y_pos = 10;
 
 	// Auxiliary variables
 	spacer_height_front = thermal_pad_thickness+soc_thickness+som_thickness;
 	spacer_height_rear =  thermal_pad_thickness+soc_thickness;
-	spacer_diameter = hole_diameter + thickness * 2;
+	spacer_diameter = spacer_hole_diameter + thickness * 2;
 	spacer_radius = spacer_diameter/2;
 	max_width = hole_distance_width_front + spacer_diameter;
 	max_lenght = hole_distance_lenght + spacer_diameter;
@@ -82,16 +82,16 @@ module heatsink_holder ()
 		}
 		// Spacers holes
 		translate ([hole_distance_width_rear/2,  hole_distance_lenght/2, -spacer_height_rear]){
-			cylinder(h = spacer_height_rear + thickness, r = hole_diameter/2);
+			cylinder(h = spacer_height_rear + thickness, r = spacer_hole_diameter/2);
 		}
 		translate ([-hole_distance_width_rear/2, hole_distance_lenght/2, -spacer_height_rear]){
-			cylinder(h = spacer_height_rear + thickness, r = hole_diameter/2);
+			cylinder(h = spacer_height_rear + thickness, r = spacer_hole_diameter/2);
 		}
 		translate ([-hole_distance_width_front/2,-hole_distance_lenght/2,-spacer_height_front]){
-			cylinder(h = spacer_height_front + thickness, r = hole_diameter/2);
+			cylinder(h = spacer_height_front + thickness, r = spacer_hole_diameter/2);
 		}
 		translate ([hole_distance_width_front/2, -hole_distance_lenght/2,-spacer_height_front]){
-			cylinder(h = spacer_height_front + thickness, r = hole_diameter/2);
+			cylinder(h = spacer_height_front + thickness, r = spacer_hole_diameter/2);
 		}
 			
 		// Heatsink screw holes
