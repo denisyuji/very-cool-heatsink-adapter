@@ -2,10 +2,19 @@ heatsink_holder ();
 
 include<roundedcube.scad>
 
+module prism(w, l, h)
+{
+  polyhedron(
+    points=[[0,0,0], [0,l,0], [w,l,0], [w,0,0], [0,0,h], [0,l,h]],
+    faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]]
+  );
+}
+
+
 module heatsink_holder ()
 {
 	// Editable parameters 
-	thickness = 1;
+	thickness = 2;
 	hole_distance_width_front = 79.2;
 	hole_distance_width_rear = 65.2;
 	hole_distance_lenght = 25.9;
@@ -24,6 +33,10 @@ module heatsink_holder ()
 	heatsink_screw_x_pos = heatsink_fan_offset+10;
 	heatsink_screw_y_pos = 10;
 
+	// Edge reinforcement
+	reinforcement_width = 7;
+	reinforcement_height = 9;	
+
 	// Auxiliary variables
 	spacer_height_front = thermal_pad_thickness+soc_thickness+som_thickness;
 	spacer_height_rear =  thermal_pad_thickness+soc_thickness;
@@ -33,7 +46,6 @@ module heatsink_holder ()
 	max_lenght = hole_distance_lenght + spacer_diameter;
 
 	// Shape
-
 	difference(){
 		union(){
 
@@ -75,6 +87,12 @@ module heatsink_holder ()
 			translate ([0,0,(heatsink_height+thickness)/2]){
 				roundedcube([heatsink_width+(thickness*2),heatsink_lenght+(thickness*2),heatsink_height+thickness], true, thickness/2, "zmax");
 			}
+			// Edge reinforcement
+			translate ([heatsink_width/2+thickness,-thickness/2,thickness]){
+				prism(reinforcement_width,thickness,reinforcement_height);}
+			translate ([-(heatsink_width/2+thickness),-thickness/2,thickness]){
+				rotate([0,0,180])
+					prism(reinforcement_width,thickness,reinforcement_height);}
 		}
 		// heatsink housing cavity
 		translate ([-(heatsink_width/2),-(heatsink_lenght/2),0]){
@@ -114,6 +132,5 @@ module heatsink_holder ()
 
 		translate ([0,0,heatsink_height+thickness/2]){
 			cube([heatsink_fan_offset*2,heatsink_fan_diameter,thickness],center=true);}
-
 	}
 }
