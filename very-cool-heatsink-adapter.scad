@@ -23,6 +23,7 @@ module heatsink_holder ()
 	soc_thickness=1.481;
 	thermal_pad_thickness=1.2;
 	spacer_hole_diameter = 2.2;
+	spacer_thickness = 1;
 
 	heatsink_width = 51+0.4;
 	heatsink_lenght = 25+0.4;
@@ -30,7 +31,8 @@ module heatsink_holder ()
 	heatsink_fan_diameter = 24;
 	heatsink_fan_offset = 13;
 	heatsink_screw_diameter = 3.2;
-	heatsink_screw_x_pos = heatsink_fan_offset+10;
+	heatsink_screw_x1_pos = heatsink_fan_offset+10;
+	heatsink_screw_x2_pos = (heatsink_fan_offset-10);
 	heatsink_screw_y_pos = 10;
 
 	// Edge reinforcement
@@ -40,7 +42,7 @@ module heatsink_holder ()
 	// Auxiliary variables
 	spacer_height_front = thermal_pad_thickness+soc_thickness+som_thickness;
 	spacer_height_rear =  thermal_pad_thickness+soc_thickness;
-	spacer_diameter = spacer_hole_diameter + thickness * 2;
+	spacer_diameter = spacer_hole_diameter + spacer_thickness * 2;
 	spacer_radius = spacer_diameter/2;
 	max_width = hole_distance_width_front + spacer_diameter;
 	max_lenght = hole_distance_lenght + spacer_diameter;
@@ -85,7 +87,7 @@ module heatsink_holder ()
 			}
 			// heatsink housing
 			translate ([0,0,(heatsink_height+thickness)/2]){
-				roundedcube([heatsink_width+(thickness*2),heatsink_lenght+(thickness*2),heatsink_height+thickness], true, thickness/2, "zmax");
+				roundedcube([heatsink_width+(thickness*2),max_lenght,heatsink_height+thickness], true, thickness/2, "zmax");
 			}
 			// Edge reinforcement
 			translate ([heatsink_width/2+thickness,-thickness/2,thickness]){
@@ -113,15 +115,22 @@ module heatsink_holder ()
 		}
 			
 		// Heatsink screw holes
-		translate ([heatsink_screw_x_pos,heatsink_screw_y_pos,heatsink_height]){
+		translate ([heatsink_screw_x1_pos,heatsink_screw_y_pos,heatsink_height]){
 			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
-		translate ([-heatsink_screw_x_pos,heatsink_screw_y_pos,heatsink_height]){
+		translate ([-heatsink_screw_x1_pos,heatsink_screw_y_pos,heatsink_height]){
 			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
-		translate ([heatsink_screw_x_pos,-heatsink_screw_y_pos,heatsink_height]){
+		translate ([heatsink_screw_x1_pos,-heatsink_screw_y_pos,heatsink_height]){
 			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
-		translate ([-heatsink_screw_x_pos,-heatsink_screw_y_pos,heatsink_height]){
+		translate ([-heatsink_screw_x1_pos,-heatsink_screw_y_pos,heatsink_height]){
 			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
-
+		translate ([heatsink_screw_x2_pos,heatsink_screw_y_pos,heatsink_height]){
+			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
+		translate ([-heatsink_screw_x2_pos,heatsink_screw_y_pos,heatsink_height]){
+			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
+		translate ([heatsink_screw_x2_pos,-heatsink_screw_y_pos,heatsink_height]){
+			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
+		translate ([-heatsink_screw_x2_pos,-heatsink_screw_y_pos,heatsink_height]){
+			cylinder(h = thickness, r = heatsink_screw_diameter/2);}
 
 		// Air flow cavity on lid
 		translate ([heatsink_fan_offset,0,heatsink_height]){
@@ -130,7 +139,7 @@ module heatsink_holder ()
 		translate ([-heatsink_fan_offset,0,heatsink_height]){
 			cylinder(h = thickness, r = heatsink_fan_diameter/2);}
 
-		translate ([0,0,heatsink_height+thickness/2]){
-			cube([heatsink_fan_offset*2,heatsink_fan_diameter,thickness],center=true);}
+		//translate ([0,0,heatsink_height+thickness/2]){
+		//	# cube([heatsink_fan_offset*2,heatsink_fan_diameter,thickness],center=true);}
 	}
 }
